@@ -13,7 +13,7 @@ public class Producto {
     }
 
     public void mostrarProductos(){
-        System.out.println("Producto: " +nombre+ " | Precio: " +precio+ " | cantidad: " +cantidad);
+        System.out.println("Producto: " +nombre+ " | Precio: $" +precio+ " | Cantidad en Stock: " +cantidad);
     }
 
     public String getNombre() {

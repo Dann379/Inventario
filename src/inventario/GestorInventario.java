@@ -50,12 +50,18 @@ public class GestorInventario {
 
     public void mostrarProductos(){
         System.out.println("📦 Productos en inventario:");
-        for (Producto producto : productos) {
-            System.out.println("------------------------------------------------");
-            producto.mostrarProductos();
+        if (productos.size()>0) {
+            for (Producto producto : productos) {
+                System.out.println("------------------------------------------------");
+                producto.mostrarProductos();
+            }
+        }else {
+            System.out.println();
+            System.out.println("❌ No se encontraron productos");
         }
         System.out.println();
     }
+
     public void calcularTotal() {
         double total = 0;
         for (Producto p : productos) {
@@ -64,4 +70,57 @@ public class GestorInventario {
         System.out.println("El valor total del inventario es " + total);
         System.out.println();
     }
-}
+
+    private void mostrarMensajeProductoNoEncontrado(String nombreBuscado) {
+        System.out.println();
+        System.out.println("❌ No se encontró ningún producto con el nombre: \"" + nombreBuscado + "\"");
+    }
+
+    public void buscarProducto(String nombre){
+        int coincidencia = 0;
+        boolean encontrado = false;
+        if (nombre.isEmpty()) {
+            System.out.println("⚠️ Debe ingresar un nombre válido.");
+            return;
+        }
+        for (Producto p : productos) {
+            if (p.getNombre().toLowerCase().contains(nombre.toLowerCase())){
+                    p.mostrarProductos();
+                    System.out.println("----------------------------------------------------");
+                    encontrado = true;
+                    coincidencia++;
+            }
+        }
+        if (!encontrado){
+            mostrarMensajeProductoNoEncontrado(nombre);
+        }
+        System.out.println("El numero de Productos con ese nombre es: " +coincidencia);
+        System.out.println("---------------------------------------------------------");
+        System.out.println();
+    }
+
+    public void eliminarProductos() {
+        List coincidencias = new ArrayList<>();
+        System.out.println("Que producto quieres eliminar? ");
+        String nombre = input.nextLine().trim();
+
+        for (Producto p : productos){
+            if (p.getNombre().toLowerCase().contains(nombre.toLowerCase())){
+                coincidencias.add(p);
+            }
+        }
+
+        if (coincidencias.isEmpty()){
+            mostrarMensajeProductoNoEncontrado(nombre);
+        }
+
+        System.out.println("🔍 Productos a eliminar:");
+        for (Producto p : productos){
+            if (p.getNombre().toLowerCase().contains(nombre.toLowerCase())){
+                p.mostrarProductos();
+                System.out.println("--------------------------------------------------");
+            }
+        }
+        }
+    }
+
