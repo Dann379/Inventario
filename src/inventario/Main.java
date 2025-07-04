@@ -25,7 +25,6 @@ public class Main {
             input.nextLine();
             switch (opcion){
                 case 0:
-
                     break;
                 case 1:
                     System.out.println();
