@@ -53,15 +53,19 @@ public class GestorInventario {
     }
 
     public void mostrarProductos(){
-        System.out.println("📦 Productos en inventario:");
+        System.out.println("📦 Inventario Actual:");
         if (productos.size()>0) {
+            int cont = 1;
             for (Producto producto : productos) {
                 System.out.println("------------------------------------------------");
+                System.out.println();
+                System.out.print(+cont+ ". ");
                 producto.mostrarProductos();
+                cont++;
             }
         }else {
             System.out.println();
-            System.out.println("❌ No se encontraron productos");
+            System.out.println("❌ No hay productos en el inventario");
         }
         System.out.println();
     }
