@@ -81,26 +81,36 @@ public class GestorInventario {
     }
 
     public void buscarProducto(){
-        int coincidencia = 0;
+        int i = 0;
         boolean encontrado = false;
-        /*if (nombre.isEmpty()) {
-            System.out.println("⚠️ Debe ingresar un nombre válido.");
-            return;
-        }*/
-        System.out.println("Buscar producto en inventario");
-        String nombre = validarNombre();
-        for (Producto p : productos) {
+        List <Producto> coincidencias = new ArrayList<>();
+        boolean validacion = false;
+        String nombre = "";
+        System.out.println("Que producto quieres buscar? ");
+        nombre = validarNombre();
+        for (Producto p : productos){
             if (p.getNombre().toLowerCase().contains(nombre.toLowerCase())){
-                    p.mostrarProductos();
-                    System.out.println("----------------------------------------------------");
-                    encontrado = true;
-                    coincidencia++;
+                coincidencias.add(p);
             }
         }
-        if (!encontrado){
+
+        if (coincidencias.isEmpty()){
             mostrarMensajeProductoNoEncontrado(nombre);
+            return;
         }
-        System.out.println("El numero de Productos con ese nombre es: " +coincidencia);
+
+        System.out.println("🔍 Productos en inventario encontrados:");
+        System.out.println();
+        int cont = 1;
+        for (Producto p : coincidencias){
+            System.out.print(+cont+ ". ");
+            p.mostrarProductos();
+            System.out.println();
+            System.out.println("--------------------------------------------------");
+            cont++;
+        }
+
+        System.out.println("El numero de Productos con ese nombre es: " +coincidencias.size());
         System.out.println("---------------------------------------------------------");
         System.out.println();
     }
@@ -109,15 +119,6 @@ public class GestorInventario {
         List <Producto> coincidencias = new ArrayList<>();
         boolean validacion = false;
         String nombre = "";
-        /*while (!validacion){
-            System.out.println("Que producto quieres eliminar? ");
-            nombre = input.nextLine().trim();
-            if (nombre.isEmpty()){
-                System.out.println("El campo no puede estar vacio, favor de ingresar un nombre de producto valido");
-            } else {
-                validacion = true;
-            }
-        }*/
         System.out.println("Que producto quieres eliminar? ");
         nombre = validarNombre();
         for (Producto p : productos){
