@@ -8,23 +8,27 @@ public class GestorInventario {
 
     //**************************************************************
 
-    public void crearProducto(){
+    public String validarNombre() {
         boolean nombrevalido = false;
-        boolean preciovalido = false;
-        boolean cantidadvalida = false;
-        String nombre = "";
-        double precio = 0;
-        int cantidad = 0;
-
-        while (!nombrevalido){
-            System.out.println("Ingrese Producto: ");
+        String nombre = null;
+        while (!nombrevalido) {
+            System.out.println("Ingrese nombre de Producto: ");
             nombre = input.nextLine().trim();
-            if (!nombre.isEmpty()){
-            nombrevalido = true;
+            if (!nombre.isEmpty()) {
+                nombrevalido = true;
             } else {
                 System.out.println("⚠️ Por favor Introdusca nombre valido");
             }
         }
+        return nombre;
+    }
+    public void crearProducto(){
+        boolean preciovalido = false;
+        boolean cantidadvalida = false;
+        double precio = 0;
+        int cantidad = 0;
+        System.out.println("ingresar nuevo producto");
+        String nombre = validarNombre();
         while (!preciovalido){
             System.out.println("Ingrese Precio: ");
             precio = input.nextDouble();
@@ -76,13 +80,15 @@ public class GestorInventario {
         System.out.println();
     }
 
-    public void buscarProducto(String nombre){
+    public void buscarProducto(){
         int coincidencia = 0;
         boolean encontrado = false;
-        if (nombre.isEmpty()) {
+        /*if (nombre.isEmpty()) {
             System.out.println("⚠️ Debe ingresar un nombre válido.");
             return;
-        }
+        }*/
+        System.out.println("Buscar producto en inventario");
+        String nombre = validarNombre();
         for (Producto p : productos) {
             if (p.getNombre().toLowerCase().contains(nombre.toLowerCase())){
                     p.mostrarProductos();
@@ -103,7 +109,7 @@ public class GestorInventario {
         List <Producto> coincidencias = new ArrayList<>();
         boolean validacion = false;
         String nombre = "";
-        while (!validacion){
+        /*while (!validacion){
             System.out.println("Que producto quieres eliminar? ");
             nombre = input.nextLine().trim();
             if (nombre.isEmpty()){
@@ -111,8 +117,9 @@ public class GestorInventario {
             } else {
                 validacion = true;
             }
-        }
-
+        }*/
+        System.out.println("Que producto quieres eliminar? ");
+        nombre = validarNombre();
         for (Producto p : productos){
             if (p.getNombre().toLowerCase().contains(nombre.toLowerCase())){
                 coincidencias.add(p);
