@@ -72,8 +72,8 @@ public class GestorInventario {
     }
 
     private void mostrarMensajeProductoNoEncontrado(String nombreBuscado) {
-        System.out.println();
         System.out.println("❌ No se encontró ningún producto con el nombre: \"" + nombreBuscado + "\"");
+        System.out.println();
     }
 
     public void buscarProducto(String nombre){
@@ -100,9 +100,18 @@ public class GestorInventario {
     }
 
     public void eliminarProductos() {
-        List coincidencias = new ArrayList<>();
-        System.out.println("Que producto quieres eliminar? ");
-        String nombre = input.nextLine().trim();
+        List <Producto> coincidencias = new ArrayList<>();
+        boolean validacion = false;
+        String nombre = "";
+        while (!validacion){
+            System.out.println("Que producto quieres eliminar? ");
+            nombre = input.nextLine().trim();
+            if (nombre.isEmpty()){
+                System.out.println("El campo no puede estar vacio, favor de ingresar un nombre de producto valido");
+            } else {
+                validacion = true;
+            }
+        }
 
         for (Producto p : productos){
             if (p.getNombre().toLowerCase().contains(nombre.toLowerCase())){
@@ -112,15 +121,23 @@ public class GestorInventario {
 
         if (coincidencias.isEmpty()){
             mostrarMensajeProductoNoEncontrado(nombre);
+            return;
         }
 
         System.out.println("🔍 Productos a eliminar:");
-        for (Producto p : productos){
-            if (p.getNombre().toLowerCase().contains(nombre.toLowerCase())){
+            for (Producto p : coincidencias){
                 p.mostrarProductos();
                 System.out.println("--------------------------------------------------");
             }
-        }
-        }
-    }
+        System.out.println("Deseas eliminarlos? (S/N)");
+            String confirmacion = input.nextLine().trim().toLowerCase();
 
+            if (confirmacion.equalsIgnoreCase("s")) {
+                String finalNombre = nombre;
+                productos.removeIf(producto -> producto.getNombre().toLowerCase().contains(finalNombre.toLowerCase()));
+                System.out.println("✅ Productos eliminados.");
+            } else {
+                System.out.println("❌ Operación cancelada.");
+            }
+    }
+}
