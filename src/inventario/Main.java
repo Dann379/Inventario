@@ -19,6 +19,7 @@ public class Main {
             System.out.println("2. Mostrar Inventario");
             System.out.println("3. Buscar Producto por Nombre");
             System.out.println("4. Eliminar Productos");
+            System.out.println("5. Editar Producto");
 
             System.out.println("0. Salir");
             opcion = input.nextInt(); // Se lee la opcion deseada
@@ -42,6 +43,10 @@ public class Main {
                 case 4:
                     gestor.eliminarProductos();
                     break;
+                case 5:
+
+                    break;
+
             }
         } while (opcion != 0);
 
