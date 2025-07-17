@@ -30,4 +30,16 @@ public class Producto {
 
         return cantidad;
     }
+
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+
+    public void setPrecio(double precio){
+        this.precio = precio;
+    }
+
+    public void setCantidad(int cantidad){
+        this.cantidad = cantidad;
+    }
 }

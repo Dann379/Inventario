@@ -141,16 +141,27 @@ public class GestorInventario {
         mostrarCoincidencias(coincidencias);
         boolean validacion = false;
         int index = 0;
-            System.out.println("Selecciona el numero del Producto");
-            index = input.nextInt();
-            input.nextLine();
 
-            if (index > 0 || index <= coincidencias.size()) {
-                return coincidencias.get(index - 1);
-            } else {
-                System.out.println("Seleccione un numero de la lista");
-                return null;
+        while (!validacion) {
+            try {
+                System.out.println("Selecciona el número del producto:");
+                index = input.nextInt();
+                input.nextLine(); // limpiar el salto de línea
+
+                if (index > 0 && index <= coincidencias.size()) {
+                    validacion = true;
+                    return coincidencias.get(index - 1);
+                } else {
+                    System.out.println("❌ Número fuera de rango. Intente nuevamente.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("❌ Entrada inválida. Ingresa un número válido.");
+                input.nextLine(); // limpiar el buffer
             }
+        }
+
+        // Nunca llega aquí porque el ciclo solo termina con return
+        return null;
     }
 
     private void eliminarSeleccion(Producto producto) {
@@ -174,13 +185,66 @@ public class GestorInventario {
         }
     }
 
-    /*public void editarProducto(){
-        List coincidencias = new ArrayList<>();
-        boolean validacion = false;
-        System.out.println("-------------Editar Producto------------");
-            String nombre = validarNombre();
-            coincidencias = listarCoincidencias(nombre);
+    private void editarNombre(Producto producto){
+        System.out.println("Ingresa el Nuevo Nombre");
+        String nombreNuevo = validarNombre();
+        producto.setNombre(nombreNuevo);
+        System.out.println("✅ El nombre se cambio correctamente.");
+    }
 
+    private void editarPrecio(Producto producto){
+        System.out.println("Ingresa el Nuevo Precio");
+        double precioNuevo = input.nextDouble();
+        producto.setPrecio(precioNuevo);
+        System.out.println("✅ El precio se cambio correctamente.");
+    }
 
-    }*/
+    private void editarCantidad(Producto producto){
+        System.out.println("Ingresa la nueva cantidad");
+        int cantidadNuevo = input.nextInt();
+        producto.setCantidad(cantidadNuevo);
+        System.out.println("✅ La cantidad se cambio correctamente.");
+    }
+
+    public void editarProducto(){
+        int opcion = -1;
+        List<Producto> coincidencias = solicitarCoincidencias();
+        if (!coincidencias.isEmpty()) {
+            Producto seleccion = seleccionarProducto(coincidencias);
+            do { //Se crea el menu
+                try {
+                    System.out.println("Que atributo quieres editar?");
+                    System.out.println("===========================================");
+                    System.out.println("1. Nombre");
+                    System.out.println("2. Precio");
+                    System.out.println("3. Cantidad");
+
+                    System.out.println("0. Salir");
+                    opcion = input.nextInt(); // Se lee la opcion deseada
+                    input.nextLine();
+                    switch (opcion) {
+                        case 0:
+                            break;
+                        case 1:
+                            System.out.println();
+                            editarNombre(seleccion);
+                            break;
+                        case 2:
+                            System.out.println();
+                            editarPrecio(seleccion);
+                            break;
+                        case 3:
+                            System.out.println();
+                            editarCantidad(seleccion);
+                            break;
+                    }
+                }catch (InputMismatchException e) {
+                    System.out.println();
+                    System.out.println("❌ Entrada inválida. Ingresa un número válido.");
+                    input.nextLine(); // limpiar el buffer
+                    System.out.println();
+                }
+            } while (opcion != 0);
+        }
+    }
 }
