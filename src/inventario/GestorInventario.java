@@ -186,22 +186,25 @@ public class GestorInventario {
     }
 
     private void editarNombre(Producto producto){
-        System.out.println("Ingresa el Nuevo Nombre");
+        System.out.println("*******Editar Producto******");
         String nombreNuevo = validarNombre();
         producto.setNombre(nombreNuevo);
-        System.out.println("✅ El nombre se cambio correctamente.");
+        System.out.println();
+        System.out.println("✅ El nombre se actualizo correctamente.");
+
     }
 
     private void editarPrecio(Producto producto){
         double precioNuevo = validarPrecio();
         producto.setPrecio(precioNuevo);
-        System.out.println("✅ El precio se cambio correctamente.");
+        System.out.println();
+        System.out.println("✅ El precio se actualizo correctamente.");
     }
 
     private void editarCantidad(Producto producto){
         int cantidadNuevo = validarCantidad();
         producto.setCantidad(cantidadNuevo);
-        System.out.println("✅ La cantidad se cambio correctamente.");
+        System.out.println("✅ La cantidad se actualizo correctamente.");
     }
 
     private double validarPrecio() {
@@ -278,14 +281,20 @@ public class GestorInventario {
                         case 1:
                             System.out.println();
                             editarNombre(seleccion);
+                            seleccion.mostrarProductos();
+                            System.out.println();
                             break;
                         case 2:
                             System.out.println();
                             editarPrecio(seleccion);
+                            seleccion.mostrarProductos();
+                            System.out.println();
                             break;
                         case 3:
                             System.out.println();
                             editarCantidad(seleccion);
+                            seleccion.mostrarProductos();
+                            System.out.println();
                             break;
                     }
                 }catch (InputMismatchException e) {
@@ -297,4 +306,6 @@ public class GestorInventario {
             } while (opcion != 0);
         }
     }
+
+
 }
