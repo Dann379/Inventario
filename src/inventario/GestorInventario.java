@@ -140,7 +140,7 @@ public class GestorInventario {
     private Producto seleccionarProducto(List<Producto> coincidencias) {
         mostrarCoincidencias(coincidencias);
         boolean validacion = false;
-        int index = 0;
+        int index;
 
         while (!validacion) {
             try {
