@@ -193,17 +193,67 @@ public class GestorInventario {
     }
 
     private void editarPrecio(Producto producto){
-        System.out.println("Ingresa el Nuevo Precio");
-        double precioNuevo = input.nextDouble();
+        double precioNuevo = validarPrecio();
         producto.setPrecio(precioNuevo);
         System.out.println("✅ El precio se cambio correctamente.");
     }
 
     private void editarCantidad(Producto producto){
-        System.out.println("Ingresa la nueva cantidad");
-        int cantidadNuevo = input.nextInt();
+        int cantidadNuevo = validarCantidad();
         producto.setCantidad(cantidadNuevo);
         System.out.println("✅ La cantidad se cambio correctamente.");
+    }
+
+    private double validarPrecio() {
+        double nuevoprecio=0;
+        boolean preciovalido = false;
+        String cantidad = null;
+
+        while (!preciovalido) {
+            System.out.println("Ingrese el nuevo precio del producto: ");
+            cantidad = input.nextLine().trim();
+
+            if (!cantidad.isEmpty()) {
+                try{
+                    nuevoprecio = Double.parseDouble(cantidad);
+                    if (nuevoprecio>0){
+                        preciovalido = true;
+                    }else {
+                        System.out.println("❌ El precio debe ser mayor a cero.");
+                    }
+                }catch (NumberFormatException e){
+                    System.out.println("❌ Entrada inválida. Ingresa solo números (usa punto si es decimal).");
+                }
+            } else {
+                System.out.println("⚠️ Por favor no dejar vacio el campo");
+            }
+        } return nuevoprecio;
+    }
+
+    private int validarCantidad() {
+        int nuevacantidad=0;
+        boolean cantidadvalido = false;
+        String cantidad = null;
+
+        while (!cantidadvalido) {
+            System.out.println("Ingrese la nueva cantidad de inventario: ");
+            cantidad = input.nextLine().trim();
+
+            if (!cantidad.isEmpty()) {
+                try{
+                    nuevacantidad = Integer.parseInt(cantidad);
+                    if (nuevacantidad>0){
+                        cantidadvalido = true;
+                    }else {
+                        System.out.println("❌ El precio debe ser mayor a cero.");
+                    }
+                }catch (NumberFormatException e){
+                    System.out.println("❌ Entrada inválida. Ingresa solo números.");
+                }
+            } else {
+                System.out.println("⚠️ Por favor no dejar vacio el campo");
+            }
+        } return nuevacantidad;
     }
 
     public void editarProducto(){
