@@ -145,6 +145,7 @@ public class GestorInventario {
         while (!validacion) {
             try {
                 System.out.println("Selecciona el número del producto:");
+                System.out.println("0 para cancelar");
                 index = input.nextInt();
                 input.nextLine(); // limpiar el salto de línea
 
@@ -152,7 +153,8 @@ public class GestorInventario {
                     validacion = true;
                     return coincidencias.get(index - 1);
                 } else {
-                    System.out.println("❌ Número fuera de rango. Intente nuevamente.");
+                    System.out.println("❌ Operacion cancelada.");
+                    return null;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("❌ Entrada inválida. Ingresa un número válido.");
@@ -264,48 +266,114 @@ public class GestorInventario {
         List<Producto> coincidencias = solicitarCoincidencias();
         if (!coincidencias.isEmpty()) {
             Producto seleccion = seleccionarProducto(coincidencias);
-            do { //Se crea el menu
-                try {
-                    System.out.println("Que atributo quieres editar?");
-                    System.out.println("===========================================");
-                    System.out.println("1. Nombre");
-                    System.out.println("2. Precio");
-                    System.out.println("3. Cantidad");
+            if (seleccion == null) {
+                return;
+            } else {
 
-                    System.out.println("0. Salir");
-                    opcion = input.nextInt(); // Se lee la opcion deseada
-                    input.nextLine();
-                    switch (opcion) {
-                        case 0:
-                            break;
-                        case 1:
-                            System.out.println();
-                            editarNombre(seleccion);
-                            seleccion.mostrarProductos();
-                            System.out.println();
-                            break;
-                        case 2:
-                            System.out.println();
-                            editarPrecio(seleccion);
-                            seleccion.mostrarProductos();
-                            System.out.println();
-                            break;
-                        case 3:
-                            System.out.println();
-                            editarCantidad(seleccion);
-                            seleccion.mostrarProductos();
-                            System.out.println();
-                            break;
+                do { //Se crea el menu
+                    try {
+                        System.out.println("Que atributo quieres editar?");
+                        System.out.println("===========================================");
+                        System.out.println("1. Nombre");
+                        System.out.println("2. Precio");
+                        System.out.println("3. Cantidad");
+
+                        System.out.println("0. Salir");
+                        opcion = input.nextInt(); // Se lee la opcion deseada
+                        input.nextLine();
+                        switch (opcion) {
+                            case 0:
+                                break;
+                            case 1:
+                                System.out.println();
+                                editarNombre(seleccion);
+                                seleccion.mostrarProductos();
+                                System.out.println();
+                                break;
+                            case 2:
+                                System.out.println();
+                                editarPrecio(seleccion);
+                                seleccion.mostrarProductos();
+                                System.out.println();
+                                break;
+                            case 3:
+                                System.out.println();
+                                editarCantidad(seleccion);
+                                seleccion.mostrarProductos();
+                                System.out.println();
+                                break;
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println();
+                        System.out.println("❌ Entrada inválida. Ingresa un número válido.");
+                        input.nextLine(); // limpiar el buffer
+                        System.out.println();
                     }
-                }catch (InputMismatchException e) {
-                    System.out.println();
-                    System.out.println("❌ Entrada inválida. Ingresa un número válido.");
-                    input.nextLine(); // limpiar el buffer
-                    System.out.println();
-                }
-            } while (opcion != 0);
+                } while (opcion != 0);
+            }
         }
     }
 
+    public void editarProductoexacto(){
+        String nombre = validarNombre();
+        List<Producto> coincidencias = new ArrayList<>();
 
+        for (Producto p : productos){
+            if (p.getNombre().equalsIgnoreCase(nombre)){
+                coincidencias.add(p);
+            }
+        }
+        if (coincidencias.size()<=1) {
+           // mostrarCoincidencias(coincidencias);
+            int opcion = -1;
+            if (!coincidencias.isEmpty()) {
+                Producto seleccion = seleccionarProducto(coincidencias);
+                do { //Se crea el menu
+                    try {
+                        System.out.println("Que atributo quieres editar?");
+                        System.out.println("===========================================");
+                        System.out.println("1. Nombre");
+                        System.out.println("2. Precio");
+                        System.out.println("3. Cantidad");
+
+                        System.out.println("0. Salir");
+                        opcion = input.nextInt(); // Se lee la opcion deseada
+                        input.nextLine();
+                        switch (opcion) {
+                            case 0:
+                                break;
+                            case 1:
+                                System.out.println();
+                                editarNombre(seleccion);
+                                seleccion.mostrarProductos();
+                                System.out.println();
+                                break;
+                            case 2:
+                                System.out.println();
+                                editarPrecio(seleccion);
+                                seleccion.mostrarProductos();
+                                System.out.println();
+                                break;
+                            case 3:
+                                System.out.println();
+                                editarCantidad(seleccion);
+                                seleccion.mostrarProductos();
+                                System.out.println();
+                                break;
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println();
+                        System.out.println("❌ Entrada inválida. Ingresa un número válido.");
+                        input.nextLine(); // limpiar el buffer
+                        System.out.println();
+                    }
+                } while (opcion != 0);
+            } else {
+                System.out.println("❌ No se encontró ningún producto con ese nombre exacto.");
+                System.out.println("-------- Pruebe con edicion avanzada.----------");
+            }
+        } else {
+            System.out.println("Hay mas de un articulo con el mismo nombre favor de usar Edicion avanzada");
+        }
+    }
 }

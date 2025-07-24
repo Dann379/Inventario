@@ -19,7 +19,8 @@ public class Main {
                 System.out.println("2. Mostrar Inventario");
                 System.out.println("3. Buscar Producto por Nombre");
                 System.out.println("4. Eliminar Productos");
-                System.out.println("5. Editar Producto");
+                System.out.println("5. Editar Producto (Edición Avanzada)");
+                System.out.println("6. Editar Producto Exacto");
 
                 System.out.println("0. Salir");
                 opcion = input.nextInt(); // Se lee la opcion deseada
@@ -45,6 +46,10 @@ public class Main {
                         break;
                     case 5:
                         gestor.editarProducto();
+                        System.out.println();
+                        break;
+                    case 6:
+                        gestor.editarProductoexacto();
                         System.out.println();
                         break;
                 }
