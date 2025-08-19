@@ -8,20 +8,7 @@ public class GestorInventario {
 
     //**************************************************************
 
-    public String validarNombre() {
-        boolean nombrevalido = false;
-        String nombre = null;
-        while (!nombrevalido) {
-            System.out.println("Ingrese nombre de Producto: ");
-            nombre = input.nextLine().trim();
-            if (!nombre.isEmpty()) {
-                nombrevalido = true;
-            } else {
-                System.out.println("⚠️ Por favor Introduzca nombre valido");
-            }
-        }
-        return nombre;
-    }
+
 
     private void mostrarMensajeProductoNoEncontrado(String nombreBuscado) {
         System.out.println("❌ No se encontró ningún producto con el nombre: \"" + nombreBuscado + "\"");
@@ -40,7 +27,7 @@ public class GestorInventario {
 
     private List<Producto> solicitarCoincidencias() {
         while (true) {
-            String nombre = validarNombre();
+            String nombre = ValidadorEntrada.validarNombre();
             List<Producto> coincidencias = buscarCoincidencias(nombre); // ya optimizado
             if (coincidencias.isEmpty()) {
                 System.out.println("❌ No se encontraron productos con ese nombre..");
@@ -73,7 +60,7 @@ public class GestorInventario {
         double precio = 0;
         int cantidad = 0;
         System.out.println("ingresar nuevo producto");
-        String nombre = validarNombre();
+        String nombre = ValidadorEntrada.validarNombre();
         while (!preciovalido){
             System.out.println("Ingrese Precio: ");
             precio = input.nextDouble();
@@ -126,7 +113,7 @@ public class GestorInventario {
 
     public List buscarProducto(){
         while (true) {
-            String nombre = validarNombre();
+            String nombre = ValidadorEntrada.validarNombre();
             List<Producto> coincidencias = buscarCoincidencias(nombre); // ya optimizado
             if (!coincidencias.isEmpty()) {
                 mostrarCoincidencias(coincidencias);
@@ -189,7 +176,7 @@ public class GestorInventario {
 
     private void editarNombre(Producto producto){
         System.out.println("*******Editar Producto******");
-        String nombreNuevo = validarNombre();
+        String nombreNuevo = ValidadorEntrada.validarNombre();
         producto.setNombre(nombreNuevo);
         System.out.println();
         System.out.println("✅ El nombre se actualizo correctamente.");
@@ -197,68 +184,16 @@ public class GestorInventario {
     }
 
     private void editarPrecio(Producto producto){
-        double precioNuevo = validarPrecio();
+        double precioNuevo = ValidadorEntrada.validarPrecio();
         producto.setPrecio(precioNuevo);
         System.out.println();
         System.out.println("✅ El precio se actualizo correctamente.");
     }
 
     private void editarCantidad(Producto producto){
-        int cantidadNuevo = validarCantidad();
+        int cantidadNuevo = ValidadorEntrada.validarCantidad();
         producto.setCantidad(cantidadNuevo);
         System.out.println("✅ La cantidad se actualizo correctamente.");
-    }
-
-    private double validarPrecio() {
-        double nuevoprecio=0;
-        boolean preciovalido = false;
-        String cantidad = null;
-
-        while (!preciovalido) {
-            System.out.println("Ingrese el nuevo precio del producto: ");
-            cantidad = input.nextLine().trim();
-
-            if (!cantidad.isEmpty()) {
-                try{
-                    nuevoprecio = Double.parseDouble(cantidad);
-                    if (nuevoprecio>0){
-                        preciovalido = true;
-                    }else {
-                        System.out.println("❌ El precio debe ser mayor a cero.");
-                    }
-                }catch (NumberFormatException e){
-                    System.out.println("❌ Entrada inválida. Ingresa solo números (usa punto si es decimal).");
-                }
-            } else {
-                System.out.println("⚠️ Por favor no dejar vacio el campo");
-            }
-        } return nuevoprecio;
-    }
-
-    private int validarCantidad() {
-        int nuevacantidad=0;
-        boolean cantidadvalido = false;
-        String cantidad = null;
-
-        while (!cantidadvalido) {
-            System.out.println("Ingrese la nueva cantidad de inventario: ");
-            cantidad = input.nextLine().trim();
-
-            if (!cantidad.isEmpty()) {
-                try{
-                    nuevacantidad = Integer.parseInt(cantidad);
-                    if (nuevacantidad>0){
-                        cantidadvalido = true;
-                    }else {
-                        System.out.println("❌ El precio debe ser mayor a cero.");
-                    }
-                }catch (NumberFormatException e){
-                    System.out.println("❌ Entrada inválida. Ingresa solo números.");
-                }
-            } else {
-                System.out.println("⚠️ Por favor no dejar vacio el campo");
-            }
-        } return nuevacantidad;
     }
 
     public void editarProducto(){
@@ -315,7 +250,7 @@ public class GestorInventario {
     }
 
     public void editarProductoexacto(){
-        String nombre = validarNombre();
+        String nombre = ValidadorEntrada.validarNombre();
         List<Producto> coincidencias = new ArrayList<>();
 
         for (Producto p : productos){
@@ -339,7 +274,7 @@ public class GestorInventario {
                         System.out.println("0. Salir");
                         opcion = input.nextInt(); // Se lee la opcion deseada
                         input.nextLine();
-                        switch (opcion) {
+                        switch (opcion) { 
                             case 0:
                                 break;
                             case 1:
