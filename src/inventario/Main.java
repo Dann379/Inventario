@@ -21,6 +21,7 @@ public class Main {
                 System.out.println("4. Eliminar Productos");
                 System.out.println("5. Editar Producto (Edición Avanzada)");
                 System.out.println("6. Editar Producto Exacto");
+                System.out.println("7. Guardar Inventario en Archivo");
 
                 System.out.println("0. Salir");
                 opcion = input.nextInt(); // Se lee la opcion deseada
@@ -51,6 +52,9 @@ public class Main {
                     case 6:
                         gestor.editarProductoexacto();
                         System.out.println();
+                        break;
+                    case 7:
+                        gestor.guardarInventarioEnArchivo();
                         break;
                 }
             }catch (InputMismatchException e) {

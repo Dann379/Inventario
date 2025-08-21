@@ -1,4 +1,8 @@
 package inventario;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class GestorInventario {
@@ -309,6 +313,29 @@ public class GestorInventario {
             }
         } else {
             System.out.println("Hay mas de un articulo con el mismo nombre favor de usar Edicion avanzada");
+        }
+    }
+
+    public void guardarInventarioEnArchivo(){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("productos.txt"));
+            if(productos.size()>0){
+                for (Producto p : productos){
+                    writer.write("Nombre: " + p.getNombre() + " | Precio: " + p.getPrecio() + " | Cantidad: " + p.getCantidad());
+                    writer.newLine();
+                }
+            }
+            writer.close();
+            File archivo = new File("productos.txt");
+            if (archivo.exists()) {
+                System.out.println("📁 Archivo creado correctamente: " + archivo.getAbsolutePath());
+                System.out.println();
+            } else {
+                System.out.println("❌ No se pudo crear el archivo.");
+                System.out.println();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
