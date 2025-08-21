@@ -333,6 +333,7 @@ public class GestorInventario {
             } else {
                 System.out.println("❌ No se pudo crear el archivo.");
                 System.out.println();
+
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
