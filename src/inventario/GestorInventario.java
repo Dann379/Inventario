@@ -1,8 +1,5 @@
 package inventario;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class GestorInventario {
@@ -63,7 +60,7 @@ public class GestorInventario {
         boolean cantidadvalida = false;
         double precio = 0;
         int cantidad = 0;
-        System.out.println("ingresar nuevo producto");
+        System.out.println("-------------ingresar nuevo producto---------------------");
         String nombre = ValidadorEntrada.validarNombre();
         while (!preciovalido){
             System.out.println("Ingrese Precio: ");
@@ -336,6 +333,36 @@ public class GestorInventario {
 
             }
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cargarInventarioDesdeArchivo(){
+
+        try {
+            File archivo = new File("productos.txt");
+            if (archivo.exists()) {
+                System.out.println("📁: " + archivo.getAbsolutePath());
+                System.out.println();
+            } else {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("productos.txt"));
+                // System.out.println("❌ No se pudo crear el archivo.");
+                System.out.println();
+
+            }
+            BufferedReader reader = new BufferedReader(new FileReader("productos.txt"));
+            String linea;
+            while ((linea = reader.readLine()) != null){
+                String[] partes = linea.split(" \\| ");
+                String nombre = partes[0].split(": ")[1];
+                double precio = Double.parseDouble(partes[1].split(": ")[1]);
+                int cantidad = Integer.parseInt(partes[2].split(": ")[1]);
+
+                Producto producto = new Producto(nombre, precio, cantidad);
+                productos.add(producto);
+            }
+            reader.close();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

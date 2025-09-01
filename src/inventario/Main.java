@@ -1,16 +1,21 @@
 package inventario;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
     public static void main(String[] args) {
         //Area de declaracon de variables y constructores globales
         Scanner input = new Scanner(System.in); //se crea una varable de tipo scanner que ayuda en las entradas de teclado
         int opcion = -1;
         GestorInventario gestor = new GestorInventario(); //se crea el objeto gestor de la clase Gestornventario
         //************************************************************
+        gestor.cargarInventarioDesdeArchivo();
 
+        //************************************************************
         do { //Se crea el menu
             try {
                 System.out.println("Hola y Bienvendo a tu Control de Inventario");
